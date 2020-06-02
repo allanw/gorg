@@ -22,7 +22,7 @@ const LoggedIn = () => {
         const token = await getTokenSilently();
         // Send a GET request to the server and add the signed in user's
         // access token in the Authorization header
-        const response = await fetch("http://localhost:8080/api/drinks", {
+        const response = await fetch("https://gorg.herokuapp.com/api/drinks", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
