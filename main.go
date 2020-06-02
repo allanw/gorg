@@ -66,7 +66,13 @@ func main() {
 		AllowedHeaders: []string{"Content-Type", "Origin", "Accept", "*"},
 	})
 
-	http.ListenAndServe(":8080", corsWrapper.Handler(r))
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
+	http.ListenAndServe(":" + port, corsWrapper.Handler(r))
 }
 
 func getPemCert(token *jwt.Token) (string, error) {
