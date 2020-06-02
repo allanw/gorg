@@ -48,26 +48,6 @@ const LoggedIn = () => {
           Hi, {user.firstname}! 
         </p>
         <div className="row">
-          {drinks.map(function (drink) {
-            return (
-              <div className="col-sm-4">
-                <div className="card">
-                  <div className="card-header">
-                    {drink.Name}
-                  </div>
-                  <div className="card-body">{drink.Description}</div>
-                  <div className="card-footer">
-                    <a onClick={() => vote("Upvoted")} className="btn btn-default float-left">
-                        <FaBeer />
-                    </a>
-                    <a onClick={() => vote("Downvoted")} className="btn btn-default float-right">
-                      <FaBeer />
-                    </a>
-                  </div>
-                </div>
-              </div>  
-            );
-          })}
         </div>
       </div>
     </div>
