@@ -2,5 +2,5 @@
   "domain": "allanw.auth0.com",
   "clientId": "BPVQLVhbuG16Ltqj3vVk6S4p1lwcD8TV",
   "audience": "https://gorg.herokuapp.com/api",
-  "cacheLocation": "localStorage"
+  "cacheLocation": "localstorage"
 }
