@@ -4,7 +4,7 @@ import { FaBeer } from 'react-icons/fa';
 
 const LoggedIn = () => {
   const [voted, setVoted] = useState(['']);
-  const [products, setProducts] = useState([
+  const [drinks, setDrinks] = useState([
     {
       id: 1,
       Name: "Negroni",
@@ -15,6 +15,29 @@ const LoggedIn = () => {
   ]);
 
   const { getTokenSilently, loading, user, logout, isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    const getDrinks = async () => {
+      try {
+        const token = await getTokenSilently();
+        // Send a GET request to the server and add the signed in user's
+        // access token in the Authorization header
+        const response = await fetch("http://localhost:8080/api/drinks", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const responseData = await response.json();
+
+        setDrinks(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getDrinks();
+  }, []);
 
   const vote = (type) => {
     alert(type);
@@ -33,15 +56,15 @@ const LoggedIn = () => {
           Hi, {user.firstname}! 
         </p>
         <div className="row">
-          {products.map(function (product) {
+          {drinks.map(function (drink) {
             return (
               <div className="col-sm-4">
                 <div className="card">
                   <div className="card-header">
-                    {product.Name}
+                    {drink.Name}
                     <span className="float-left">{voted}</span>
                   </div>
-                  <div className="card-body">{product.Description}</div>
+                  <div className="card-body">{drink.Description}</div>
                   <div className="card-footer">
                     <a onClick={() => vote("Upvoted")} className="btn btn-default float-left">
                         <FaBeer />
