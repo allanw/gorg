@@ -31,13 +31,13 @@ func main() {
 	jwtMiddleware := jwtmiddleware.New(jwtmiddleware.Options{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 			// Verify 'aud' claim
-			aud := "https://allanw.auth0.com/"
+			aud := "https://gorg.herokuapp.com/api"
 			checkAud := token.Claims.(jwt.MapClaims).VerifyAudience(aud, false)
 			if !checkAud {
 				return token, errors.New("Invalid audience.")
 			}
 			// Verify 'iss' claim
-			iss := "https://gorg.herokuapp.com/api/"
+			iss := "https://allanw.auth0.com/"
 			checkIss := token.Claims.(jwt.MapClaims).VerifyIssuer(iss, false)
 			if !checkIss {
 				return token, errors.New("Invalid issuer.")
@@ -58,7 +58,7 @@ func main() {
 
 	r.Handle("/", http.FileServer(http.Dir("./views/")))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
-	r.Handle("/drinks", jwtMiddleware.Handler(getDrinksHandler)).Methods("GET")
+	r.Handle("/api/drinks", jwtMiddleware.Handler(getDrinksHandler)).Methods("GET")
 
 	// For dev only - Set up CORS so React client can consume our API
 	corsWrapper := cors.New(cors.Options{
@@ -71,7 +71,7 @@ func main() {
 
 func getPemCert(token *jwt.Token) (string, error) {
 	cert := ""
-	resp, err := http.Get("https://gorg.herokuapp.com/api/.well-known/jwks.json")
+	resp, err := http.Get("https://allanw.auth0.com/.well-known/jwks.json")
 
 	if err != nil {
 		return cert, err
