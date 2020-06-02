@@ -28,6 +28,7 @@ const LoggedIn = () => {
         });
 
         const responseData = await response.json();
+	console.log(responseData)
 
         setDrinks(responseData);
       } catch (error) {
