@@ -3,7 +3,6 @@ import { useAuth0 } from "../react-auth0-spa";
 import { FaBeer } from 'react-icons/fa';
 
 const LoggedIn = () => {
-  const [voted, setVoted] = useState(['']);
   const [drinks, setDrinks] = useState([
     {
       id: 1,
@@ -37,7 +36,7 @@ const LoggedIn = () => {
     };
 
     getDrinks();
-  }, []);
+  });
 
   const vote = (type) => {
     alert(type);
@@ -62,7 +61,6 @@ const LoggedIn = () => {
                 <div className="card">
                   <div className="card-header">
                     {drink.Name}
-                    <span className="float-left">{voted}</span>
                   </div>
                   <div className="card-body">{drink.Description}</div>
                   <div className="card-footer">
