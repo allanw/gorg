@@ -15,6 +15,7 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /main ./
 COPY --from=node_builder /build ./views
+COPY --from=builder /app/views ./views
 RUN chmod +x ./main
 EXPOSE 8080
 CMD ./main
