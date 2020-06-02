@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"errors"
 	"encoding/json"
+	"os"
+	"log"
 )
 
 type Response struct {
