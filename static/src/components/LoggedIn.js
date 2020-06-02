@@ -3,15 +3,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import { FaBeer } from 'react-icons/fa';
 
 const LoggedIn = () => {
-  const [drinks, setDrinks] = useState([
-    {
-      id: 1,
-      Name: "Negroni",
-      Slug: "negroni",
-      Description:
-        "Negroni drink",
-    },
-  ]);
+  const [drinks, setDrinks] = useState([]);
 
   const { getTokenSilently, loading, user, logout, isAuthenticated } = useAuth0();
 
@@ -37,7 +29,7 @@ const LoggedIn = () => {
     };
 
     getDrinks();
-  });
+  }, []);
 
   const vote = (type) => {
     alert(type);
