@@ -37,7 +37,7 @@ const LoggedIn = () => {
       // Send a POST request to the Go server for the selected product
       // with the vote type
       const response = await fetch(
-        `http://localhost:8080/api/drinks`,
+        `https://gorg.herokuapp.com/api/drinks`,
         {
           method: "POST",
           headers: {
