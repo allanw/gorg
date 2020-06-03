@@ -3,7 +3,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import { FaBeer } from 'react-icons/fa';
 
 const LoggedIn = () => {
-  const [drinks, setDrinks] = useState([{ drinks: [] }]);
+  const [drinks, setDrinks] = useState([]);
 
   const { getTokenSilently, loading, user, logout, isAuthenticated } = useAuth0();
 
@@ -30,10 +30,6 @@ const LoggedIn = () => {
     getDrinks();
   }, []);
 
-  const vote = (type) => {
-    alert(type);
-  }
-
   if (loading || !user) {
     return <div>Loading...</div>;
   }
@@ -46,7 +42,7 @@ const LoggedIn = () => {
         <p>
           Hi, {user.firstname}! 
         </p>
-	{drinks.drinks.map(item => (
+	{drinks.map(item => (
         <li key={item}>
  	  {item}
         </li>
