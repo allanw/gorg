@@ -51,14 +51,12 @@ var createDrinkHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Re
 	var lastInsertId int
 	t := time.Now()
 	name := r.FormValue("name")
-
+	fmt.Println(name)
 	err = db.QueryRow("INSERT INTO drink(name, created_at) VALUES ($1, $2) returning id;", name, t).Scan(&lastInsertId)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(drink)
 	payload, _ := json.Marshal(drink)
-	fmt.Println(payload)
 	w.Write([]byte(payload))
 })

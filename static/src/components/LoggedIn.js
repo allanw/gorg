@@ -36,6 +36,10 @@ const LoggedIn = () => {
       const token = await getTokenSilently();
       // Send a POST request to the Go server for the selected product
       // with the vote type
+      const formData = new FormData();
+
+      formData.append('name', 'Old Fashioned')
+
       const response = await fetch(
         `https://gorg.herokuapp.com/api/drinks`,
         {
@@ -43,8 +47,8 @@ const LoggedIn = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ name: 'testing' }),
-        }
+          body: formData,
+        } 
       );
       // Since this is just for demonstration and we're not actually
       // persisting this data, we'll just set the product vote status here
