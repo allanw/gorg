@@ -1,15 +1,16 @@
 package main
 
 import (
-	"github.com/auth0/go-jwt-middleware"
+	"encoding/json"
+	"errors"
+	"log"
+	"net/http"
+	"os"
+
+	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	"net/http"
-	"errors"
-	"encoding/json"
-	"os"
-	"log"
 )
 
 type Response struct {
@@ -61,6 +62,7 @@ func main() {
 	r.Handle("/", http.FileServer(http.Dir("./views/")))
 	r.PathPrefix("/static/").Handler(http.FileServer(http.Dir("./views/")))
 	r.Handle("/api/drinks", jwtMiddleware.Handler(getDrinksHandler)).Methods("GET")
+	r.Handle("/api/drinks", jwtMiddleware.Handler(createDrinkHandler)).Methods("POST")
 
 	// For dev only - Set up CORS so React client can consume our API
 	corsWrapper := cors.New(cors.Options{
@@ -74,7 +76,7 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	http.ListenAndServe(":" + port, corsWrapper.Handler(r))
+	http.ListenAndServe(":"+port, corsWrapper.Handler(r))
 }
 
 func getPemCert(token *jwt.Token) (string, error) {

@@ -4,6 +4,7 @@ import { FaBeer } from 'react-icons/fa';
 
 const LoggedIn = () => {
   const [drinks, setDrinks] = useState([]);
+  const [drinks2, setDrinks2] = useState([]);
 
   const { getTokenSilently, loading, user, logout, isAuthenticated } = useAuth0();
 
@@ -30,9 +31,35 @@ const LoggedIn = () => {
     getDrinks();
   }, []);
 
-  const vote = (type) => {
-    alert(type);
-  }
+  const vote = async (name, type, index) => {
+    try {
+      const token = await getTokenSilently();
+      // Send a POST request to the Go server for the selected product
+      // with the vote type
+      const response = await fetch(
+        `http://localhost:8080/api/drinks`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name: 'testing' }),
+        }
+      );
+      // Since this is just for demonstration and we're not actually
+      // persisting this data, we'll just set the product vote status here
+      // if the product exists
+      if (response.ok) {
+        console.log(response);
+        setDrinks2({
+          ...drinks2,
+          ['name']: ['testing'],
+        });
+      } else console.log(response.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (loading || !user) {
     return <div>Loading...</div>;
@@ -56,7 +83,7 @@ const LoggedIn = () => {
                   <div className="card-footer">
                     <a onClick={() => vote(drink.id, "Upvoted", index)}
                       className="btn btn-default float-left">
-                      <FaBeer />
+                      <FaBeer />{drinks2['name']}
                     </a>
                     <small className="text-muted"></small>
                     <a onClick={() => vote(drink.id, "Downvoted", index)}
