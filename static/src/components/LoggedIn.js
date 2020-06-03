@@ -20,7 +20,6 @@ const LoggedIn = () => {
         });
 
         const responseData = await response.json();
-	console.log(responseData)
 
         setDrinks(responseData);
       } catch (error) {
@@ -46,6 +45,7 @@ const LoggedIn = () => {
         <h1>Gorg</h1>
         <p>
           Hi, {user.firstname}! 
+	  {drinks}
         </p>
         <div className="row">
         </div>
