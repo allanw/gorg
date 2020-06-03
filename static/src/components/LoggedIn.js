@@ -45,7 +45,6 @@ const LoggedIn = () => {
         <h1>Gorg</h1>
         <p>
           Hi, {user.firstname}! 
-	  {drinks}
         </p>
         <div className="row">
         </div>
