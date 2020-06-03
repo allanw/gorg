@@ -30,6 +30,10 @@ const LoggedIn = () => {
     getDrinks();
   }, []);
 
+  const vote = (type) => {
+    alert(type);
+  }
+
   if (loading || !user) {
     return <div>Loading...</div>;
   }
@@ -42,12 +46,28 @@ const LoggedIn = () => {
         <p>
           Hi, {user.firstname}! 
         </p>
-	{drinks.map(item => (
-        <li key={item}>
- 	  {item}
-        </li>
-      ))}
         <div className="row">
+          {drinks.map(function (drink, index) {
+            return (
+              <div className="col-sm-4" key={index}>
+                <div className="card mb-4">
+                  <div className="card-header">{drink.name}</div>
+                  <div className="card-body">{drink.name}</div>
+                  <div className="card-footer">
+                    <a onClick={() => vote(drink.id, "Upvoted", index)}
+                      className="btn btn-default float-left">
+                      <FaBeer />
+                    </a>
+                    <small className="text-muted"></small>
+                    <a onClick={() => vote(drink.id, "Downvoted", index)}
+                      className="btn btn-default float-right">
+                      <FaBeer />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
