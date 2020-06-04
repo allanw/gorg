@@ -5,6 +5,7 @@ import { FaBeer } from 'react-icons/fa';
 const LoggedIn = () => {
   const [drinks, setDrinks] = useState([]);
   const [drinks2, setDrinks2] = useState([]);
+  const [drinkname, setDrinks3] = useState([]);
 
   const { getTokenSilently, loading, user, logout, isAuthenticated } = useAuth0();
 
@@ -31,6 +32,10 @@ const LoggedIn = () => {
     getDrinks();
   }, []);
 
+  function handleDrinkChange(n) {
+    setDrinks3(n.target.value);
+  };
+
   const vote = async (name, type, index) => {
     try {
       const token = await getTokenSilently();
@@ -38,7 +43,7 @@ const LoggedIn = () => {
       // with the vote type
       const formData = new FormData();
 
-      formData.append('name', 'Old Fashioned')
+      formData.append('name', drinkname)
 
       const response = await fetch(
         `https://gorg.herokuapp.com/api/drinks`,
@@ -85,6 +90,7 @@ const LoggedIn = () => {
                   <div className="card-header">{drink.name}</div>
                   <div className="card-body">{drink.name}</div>
                   <div className="card-footer">
+                    <input type="text" name="drinkname" onChange={handleDrinkChange} />
                     <a onClick={() => vote(drink.id, "Upvoted", index)}
                       className="btn btn-default float-left">
                       <FaBeer />{drinks2['name']}
